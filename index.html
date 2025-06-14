@@ -618,31 +618,6 @@
             color: var(--accent);
         }
         
-        .password-error {
-            color: var(--danger);
-            margin-top: 15px;
-            font-size: 0.9rem;
-            display: none;
-        }
-        
-        .password-hint {
-            margin-top: 15px;
-            color: #9da5b4;
-            font-size: 0.85rem;
-            cursor: pointer;
-        }
-        
-        .debug-info {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
-            color: #7e8a98;
-            font-size: 0.8rem;
-            display: none;
-            text-align: left;
-        }
-        
         .footer {
             text-align: center;
             padding: 30px 0;
@@ -867,12 +842,12 @@
                             <i class="fas fa-file-code"></i>
                         </div>
                         <div class="file-name">website.html</div>
-                        <极客之家 size">128 KB</div>
+                        <div class="file-size">128 KB</div>
                         <div class="file-date">2023-09-18</div>
                         <div class="file-actions">
                             <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
                             <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
-                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></极客之家>
+                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
                         </div>
                     </div>
                 </div>
@@ -943,10 +918,6 @@
                 <input type="password" id="passwordInput" placeholder="输入访问密码">
             </div>
             
-            <div class="password-error" id="passwordError">
-                <i class="fas fa-exclamation-circle"></i> 密码错误！请重试
-            </div>
-
             <button class="modal-btn" id="loginBtn">
                 <i class="fas fa-unlock-alt"></i> 解锁网盘
             </button>
@@ -955,54 +926,33 @@
                 <i class="fas fa-shield-alt"></i>
                 <span>使用SHA-256哈希验证密码，确保安全性</span>
             </div>
-            
-            <button class="view-btn" id="toggleDebug" style="margin-top: 15px; width: 100%;">
-                <i class="fas fa-bug"></i> 显示调试信息
-            </button>
         </div>
     </div>
 
     <script>
-        // 存储密码的SHA-256哈希值
+        // 存储密码的SHA-256哈希值（示例密码为 "github123"）
         const storedPasswordHash = "94d8a64bf2a5d28da8f9ac2524f8484bb32692085ea94470c236f6a29f1834be";
         
         // 计算字符串的SHA-256哈希值
         async function sha256(message) {
-            try {
-                const encoder = new TextEncoder();
-                const data = encoder.encode(message);
-                const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-                const hashArray = Array.from(new Uint8Array(hashBuffer));
-                return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            } catch (error) {
-                console.error("SHA-256计算错误:", error);
-                // 如果浏览器不支持crypto.subtle，使用备用方法
-                return simpleHash(message);
-            }
+            const encoder = new TextEncoder();
+            const data = encoder.encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
         
-        // 简单的哈希函数（备用方案）
-        function simpleHash(str) {
-            let hash = 0;
-            if (str.length === 0) return hash.toString(16);
-            for (let i = 0; i < str.length; i++) {
-                const char = str.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash; // 转换为32位整数
-            }
-            return Math.abs(hash).toString(16);
+        // 密码验证函数
+        async function verifyPassword(password) {
+            const hash = await sha256(password);
+            return hash === storedPasswordHash;
         }
         
         // 页面加载完成后执行
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             const authModal = document.getElementById('authModal');
             const passwordInput = document.getElementById('passwordInput');
             const loginBtn = document.getElementById('loginBtn');
-            const passwordError = document.getElementById('passwordError');
-            const passwordHint = document.getElementById('passwordHint');
-            const debugInfo = document.getElementById('debugInfo');
-            const inputHashSpan = document.getElementById('inputHash');
-            const toggleDebug = document.getElementById('toggleDebug');
             
             // 检查是否已经登录
             if(!localStorage.getItem('authenticated')) {
@@ -1013,61 +963,44 @@
             
             // 登录功能
             loginBtn.addEventListener('click', async function() {
-                const password = passwordInput.value.trim();
-                
-                if(password === '') {
-                    passwordError.textContent = "请输入访问密码";
-                    passwordError.style.display = 'block';
+                if(passwordInput.value.trim() === '') {
+                    alert('请输入访问密码');
                     return;
                 }
                 
-                try {
-                    const inputHash = await sha256(password);
+                const isValid = await verifyPassword(passwordInput.value);
+                
+                if(isValid) {
+                    localStorage.setItem('authenticated', 'true');
+                    authModal.style.display = 'none';
                     
-                    // 显示调试信息
-                    inputHashSpan.textContent = inputHash;
+                    // 显示欢迎消息
+                    const welcomeMsg = document.createElement('div');
+                    welcomeMsg.innerHTML = `
+                        <div style="position: fixed; top: 20px; right: 20px; background: rgba(26, 188, 156, 0.9); color: white; padding: 15px 25px; border-radius: 10px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle"></i>
+                            <span>身份验证成功！正在加载您的加密文件...</span>
+                        </div>
+                    `;
+                    document.body.appendChild(welcomeMsg);
                     
-                    if(inputHash === storedPasswordHash) {
-                        localStorage.setItem('authenticated', 'true');
-                        authModal.style.display = 'none';
-                        
-                        // 显示欢迎消息
-                        showNotification('身份验证成功！正在加载您的加密文件...', 'success');
-                    } else {
-                        // 密码错误处理
-                        passwordError.style.display = 'block';
-                        passwordInput.style.borderColor = 'var(--danger)';
-                        passwordInput.style.boxShadow = '0 0 0 3px rgba(231, 76, 60, 0.2)';
-                        
-                        setTimeout(() => {
-                            passwordInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                            passwordInput.style.boxShadow = 'none';
-                        }, 1000);
-                        
-                        passwordInput.value = '';
-                        passwordInput.focus();
-                    }
-                } catch (error) {
-                    console.error("密码验证错误:", error);
-                    showNotification('密码验证过程中出错，请重试', 'error');
-                }
-            });
-            
-            // 显示密码提示
-            passwordHint.addEventListener('click', function() {
-                passwordInput.value = "github123";
-                passwordInput.focus();
-                passwordError.style.display = 'none';
-            });
-            
-            // 切换调试信息
-            toggleDebug.addEventListener('click', function() {
-                if(debugInfo.style.display === 'none') {
-                    debugInfo.style.display = 'block';
-                    toggleDebug.innerHTML = '<i class="fas fa-bug"></i> 隐藏调试信息';
+                    // 3秒后移除消息
+                    setTimeout(() => {
+                        welcomeMsg.style.opacity = '0';
+                        setTimeout(() => welcomeMsg.remove(), 500);
+                    }, 3000);
                 } else {
-                    debugInfo.style.display = 'none';
-                    toggleDebug.innerHTML = '<i class="fas fa-bug"></i> 显示调试信息';
+                    // 密码错误动画效果
+                    passwordInput.style.borderColor = 'var(--danger)';
+                    passwordInput.style.boxShadow = '0 0 0 3px rgba(231, 76, 60, 0.2)';
+                    
+                    setTimeout(() => {
+                        passwordInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                        passwordInput.style.boxShadow = 'none';
+                    }, 1000);
+                    
+                    passwordInput.value = '';
+                    passwordInput.focus();
                 }
             });
             
@@ -1081,13 +1014,41 @@
                     const fileName = this.querySelector('.file-name').textContent;
                     const fileType = this.querySelector('.file-icon').className.split(' ')[1];
                     
-                    showNotification(`正在解密并下载: ${fileName}`, 'info');
+                    // 模拟文件下载
+                    const downloadMsg = document.createElement('div');
+                    downloadMsg.innerHTML = `
+                        <div style="position: fixed; top: 20px; right: 20px; background: rgba(52, 152, 219, 0.9); color: white; padding: 15px 25px; border-radius: 10px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-download"></i>
+                            <span>正在解密并下载: ${fileName}</span>
+                        </div>
+                    `;
+                    document.body.appendChild(downloadMsg);
+                    
+                    // 3秒后移除消息
+                    setTimeout(() => {
+                        downloadMsg.style.opacity = '0';
+                        setTimeout(() => downloadMsg.remove(), 500);
+                    }, 3000);
                 });
             });
             
             // 上传按钮点击效果
             document.querySelector('.upload-btn').addEventListener('click', function() {
-                showNotification('选择文件上传（已启用AES-256加密）', 'info');
+                // 模拟文件上传
+                const uploadMsg = document.createElement('div');
+                uploadMsg.innerHTML = `
+                    <div style="position: fixed; top: 20px; right: 20px; background: rgba(46, 204, 113, 0.9); color: white; padding: 15px 25px; border-radius: 10px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>选择文件上传（已启用AES-256加密）</span>
+                    </div>
+                `;
+                document.body.appendChild(uploadMsg);
+                
+                // 3秒后移除消息
+                setTimeout(() => {
+                    uploadMsg.style.opacity = '0';
+                    setTimeout(() => uploadMsg.remove(), 500);
+                }, 3000);
             });
             
             // 导航项点击效果
@@ -1097,56 +1058,6 @@
                     navItems.forEach(i => i.classList.remove('active'));
                     this.classList.add('active');
                 });
-            });
-            
-            // 显示通知消息
-            function showNotification(message, type) {
-                const colors = {
-                    'success': '#2ecc71',
-                    'error': '#e74c3c',
-                    'info': '#3498db'
-                };
-                
-                const icon = {
-                    'success': 'fa-check-circle',
-                    'error': 'fa-exclamation-circle',
-                    'info': 'fa-info-circle'
-                };
-                
-                const notification = document.createElement('div');
-                notification.innerHTML = `
-                    <div style="position: fixed; top: 20px; right: 20px; background: ${colors[type]}; 
-                    color: white; padding: 15px 25px; border-radius: 10px; z-index: 1000; 
-                    box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px;
-                    animation: slideIn 0.3s ease-out;">
-                        <i class="fas ${icon[type]}"></i>
-                        <span>${message}</span>
-                    </div>
-                `;
-                document.body.appendChild(notification);
-                
-                // 3秒后移除消息
-                setTimeout(() => {
-                    notification.style.opacity = '0';
-                    setTimeout(() => notification.remove(), 500);
-                }, 3000);
-                
-                // 添加动画
-                const style = document.createElement('style');
-                style.innerHTML = `
-                    @keyframes slideIn {
-                        from { transform: translateX(100%); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-            
-            // 按Enter键登录
-            passwordInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    loginBtn.click();
-                }
             });
         });
     </script>
