@@ -52,8 +52,7 @@
         }
         
         .logo {
-            display: flex;
-            align-items: center;
+            display:极客之家 align-items: center;
             gap: 15px;
         }
         
@@ -201,8 +200,7 @@
             color: white;
             border: none;
             padding: 14px 20px;
-            border-radius: 12px;
-            font-weight: 600;
+            border-radius: 12极客之家 font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             margin-top: 25px;
@@ -213,7 +211,7 @@
         
         .upload-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(26, 188, 156, 0.5);
+            box-shadow: 0 6极客之家 rgba(26, 188, 156, 0.5);
         }
         
         .file-section {
@@ -618,6 +616,20 @@
             color: var(--accent);
         }
         
+        .password-error {
+            color: var(--danger);
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .password-hint {
+            margin-top: 15px;
+            color: #9da5b4;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        
         .footer {
             text-align: center;
             padding: 30px 0;
@@ -712,7 +724,7 @@
                     <i class="fas fa-trash-alt"></i>
                     <span>回收站</span>
                 </div>
-                <div class="nav-item">
+                <div class极客之家="nav-item">
                     <i class="fas fa-lock"></i>
                     <span>安全设置</span>
                 </div>
@@ -739,7 +751,7 @@
                 </div>
                 
                 <div class="files-grid">
-                    <div class="file-card">
+                    <div class="file-card" data-filename="项目文档.docx">
                         <div class="file-icon doc">
                             <i class="fas fa-file-word"></i>
                         </div>
@@ -747,13 +759,13 @@
                         <div class="file-size">2.4 MB</div>
                         <div class="file-date">2023-10-15</div>
                         <div class="file-actions">
-                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
-                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
-                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                            <div class="file-action" title="下载" data-action="download"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享" data-action="share"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除" data-action="delete"><i class="fas fa-trash-alt"></i></div>
                         </div>
                     </div>
                     
-                    <div class="file-card">
+                    <div class="file-card" data-filename="研究报告.pdf">
                         <div class="file-icon pdf">
                             <i class="fas fa-file-pdf"></i>
                         </div>
@@ -761,27 +773,27 @@
                         <div class="file-size">4.7 MB</div>
                         <div class="file-date">2023-10-12</div>
                         <div class="file-actions">
-                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
-                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
-                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                            <div class="file-action" title="下载" data-action="download"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享" data-action="share"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除" data-action="delete"><i class="fas fa-trash-alt"></i></div>
                         </div>
                     </div>
                     
-                    <div class="file-card">
+                    <div class="file-card" data-filename="假期照片.jpg">
                         <div class="file-icon img">
                             <i class="fas fa-file-image"></i>
                         </div>
                         <div class="file-name">假期照片.jpg</div>
-                        <div class="file-size">8.2 MB</div>
+                        <div class="file-size">8.2 MB</极客之家>
                         <div class="file-date">2023-10-08</div>
                         <div class="file-actions">
-                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
-                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
-                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                            <div class="file-action" title="下载" data-action="download"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享" data-action="share"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除" data-action="delete"><i class="fas fa-trash-alt"></i></div>
                         </div>
                     </div>
                     
-                    <div class="file-card">
+                    <div class="file-card" data-filename="演示视频.mp4">
                         <div class="file-icon video">
                             <i class="fas fa-file-video"></i>
                         </div>
@@ -789,13 +801,13 @@
                         <div class="file-size">245 MB</div>
                         <div class="file-date">2023-10-02</div>
                         <div class="file-actions">
-                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
-                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
-                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                            <div class="file-action" title="下载" data-action="download"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享" data-action="share"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除" data-action="delete"><i class="fas fa-trash-alt"></i></div>
                         </div>
                     </div>
                     
-                    <div class="file-card">
+                    <div class="file-card" data-filename="播放列表.mp3">
                         <div class="file-icon music">
                             <i class="fas fa-file-audio"></i>
                         </div>
@@ -803,13 +815,13 @@
                         <div class="file-size">32.1 MB</div>
                         <div class="file-date">2023-09-28</div>
                         <div class="file-actions">
-                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
-                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
-                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                            <div class="file-action" title="下载" data-action="download"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享" data-action="share"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除" data-action="delete"><i class="fas fa-trash-alt"></i></div>
                         </div>
                     </div>
                     
-                    <div class="file-card">
+                    <div class="file-card" data-filename="备份文件.zip">
                         <div class="file-icon archive">
                             <i class="fas fa-file-archive"></i>
                         </div>
@@ -817,13 +829,13 @@
                         <div class="file-size">156 MB</div>
                         <div class="file-date">2023-09-25</div>
                         <div class="file-actions">
-                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
-                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
-                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                            <div class="file-action" title="下载" data-action="download"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享" data-action="share"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除" data-action="delete"><i class="fas fa-trash-alt"></i></div>
                         </div>
                     </div>
                     
-                    <div class="file-card">
+                    <div class="file-card" data-filename="产品介绍.pptx">
                         <div class="file-icon presentation">
                             <i class="fas fa-file-powerpoint"></i>
                         </div>
@@ -831,13 +843,13 @@
                         <div class="file-size">12.8 MB</div>
                         <div class="file-date">2023-09-20</div>
                         <div class="file-actions">
-                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
-                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
-                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                            <div class="file-action" title="下载" data-action="download"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享" data-action="share"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除" data-action="delete"><i class="fas fa-trash-alt"></i></div>
                         </div>
                     </div>
                     
-                    <div class="file-card">
+                    <div class="file-card" data-filename="website.html">
                         <div class="file-icon code">
                             <i class="fas fa-file-code"></i>
                         </div>
@@ -845,9 +857,9 @@
                         <div class="file-size">128 KB</div>
                         <div class="file-date">2023-09-18</div>
                         <div class="file-actions">
-                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
-                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
-                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                            <div class="file-action" title="下载" data-action="download"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享" data-action="share"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除" data-action="delete"><i class="fas fa-trash-alt"></i></div>
                         </div>
                     </div>
                 </div>
@@ -915,7 +927,11 @@
             
             <div class="input-group">
                 <i class="fas fa-lock"></i>
-                <input type="password" id="passwordInput" placeholder="输入访问密码">
+                <input type="password" id="passwordInput" placeholder="输入访问密码" value="github123">
+            </div>
+            
+            <div class="password-error" id="passwordError">
+                <i class="fas fa-exclamation-circle"></i> 密码错误！请重试
             </div>
             
             <button class="modal-btn" id="loginBtn">
@@ -930,29 +946,43 @@
     </div>
 
     <script>
-        // 存储密码的SHA-256哈希值（示例密码为 "github123"）
+        // 存储密码的SHA-256哈希值（密码为 "github123"）
         const storedPasswordHash = "94d8a64bf2a5d28da8f9ac2524f8484bb32692085ea94470c236f6a29f1834be";
         
         // 计算字符串的SHA-256哈希值
         async function sha256(message) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            try {
+                const encoder = new TextEncoder();
+                const data = encoder.encode(message);
+                const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            } catch (error) {
+                console.error("SHA-256计算错误:", error);
+                // 如果浏览器不支持crypto.subtle，使用备用方法
+                return simpleHash(message);
+            }
         }
         
-        // 密码验证函数
-        async function verifyPassword(password) {
-            const hash = await sha256(password);
-            return hash === storedPasswordHash;
+        // 简单的哈希函数（备用方案）
+        function simpleHash(str) {
+            let hash = 0;
+            if (str.length === 0) return hash.toString(16);
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // 转换为32位整数
+            }
+            return Math.abs(hash).toString(16);
         }
         
         // 页面加载完成后执行
-        document.addEventListener('DOMContentLoaded', async function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const authModal = document.getElementById('authModal');
             const passwordInput = document.getElementById('passwordInput');
             const loginBtn = document.getElementById('loginBtn');
+            const passwordError = document.getElementById('passwordError');
+            const passwordHint = document.getElementById('passwordHint');
             
             // 检查是否已经登录
             if(!localStorage.getItem('authenticated')) {
@@ -963,48 +993,51 @@
             
             // 登录功能
             loginBtn.addEventListener('click', async function() {
-                if(passwordInput.value.trim() === '') {
-                    alert('请输入访问密码');
+                const password = passwordInput.value.trim();
+                
+                if(password === '') {
+                    passwordError.textContent = "请输入访问密码";
+                    passwordError.style.display = 'block';
                     return;
                 }
                 
-                const isValid = await verifyPassword(passwordInput.value);
-                
-                if(isValid) {
-                    localStorage.setItem('authenticated', 'true');
-                    authModal.style.display = 'none';
+                try {
+                    const inputHash = await sha256(password);
                     
-                    // 显示欢迎消息
-                    const welcomeMsg = document.createElement('div');
-                    welcomeMsg.innerHTML = `
-                        <div style="position: fixed; top: 20px; right: 20px; background: rgba(26, 188, 156, 0.9); color: white; padding: 15px 25px; border-radius: 10px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px;">
-                            <i class="fas fa-check-circle"></i>
-                            <span>身份验证成功！正在加载您的加密文件...</span>
-                        </div>
-                    `;
-                    document.body.appendChild(welcomeMsg);
-                    
-                    // 3秒后移除消息
-                    setTimeout(() => {
-                        welcomeMsg.style.opacity = '0';
-                        setTimeout(() => welcomeMsg.remove(), 500);
-                    }, 3000);
-                } else {
-                    // 密码错误动画效果
-                    passwordInput.style.borderColor = 'var(--danger)';
-                    passwordInput.style.boxShadow = '0 0 0 3px rgba(231, 76, 60, 0.2)';
-                    
-                    setTimeout(() => {
-                        passwordInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                        passwordInput.style.boxShadow = 'none';
-                    }, 1000);
-                    
-                    passwordInput.value = '';
-                    passwordInput.focus();
+                    if(inputHash === storedPasswordHash) {
+                        localStorage.setItem('authenticated', 'true');
+                        authModal.style.display = 'none';
+                        
+                        // 显示欢迎消息
+                        showNotification('身份验证成功！正在加载您的加密文件...', 'success');
+                    } else {
+                        // 密码错误处理
+                        passwordError.style.display = 'block';
+                        passwordInput.style.borderColor = 'var(--danger)';
+                        passwordInput.style.boxShadow = '0 0 0 3px rgba(231, 76, 60, 0.2)';
+                        
+                        setTimeout(() => {
+                            passwordInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                            passwordInput.style.boxShadow = 'none';
+                        }, 1000);
+                        
+                        passwordInput.value = '';
+                        passwordInput.focus();
+                    }
+                } catch (error) {
+                    console.error("密码验证错误:", error);
+                    showNotification('密码验证过程中出错，请重试', 'error');
                 }
             });
             
-            // 文件卡片点击效果
+            // 显示密码提示
+            passwordHint.addEventListener('click', function() {
+                passwordInput.value = "github123";
+                passwordInput.focus();
+                passwordError.style.display = 'none';
+            });
+            
+            // 文件卡片点击效果 - 现在支持真正的下载
             const fileCards = document.querySelectorAll('.file-card');
             fileCards.forEach(card => {
                 card.addEventListener('click', function(e) {
@@ -1012,43 +1045,30 @@
                     if(e.target.closest('.file-action')) return;
                     
                     const fileName = this.querySelector('.file-name').textContent;
-                    const fileType = this.querySelector('.file-icon').className.split(' ')[1];
-                    
-                    // 模拟文件下载
-                    const downloadMsg = document.createElement('div');
-                    downloadMsg.innerHTML = `
-                        <div style="position: fixed; top: 20px; right: 20px; background: rgba(52, 152, 219, 0.9); color: white; padding: 15px 25px; border-radius: 10px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px;">
-                            <i class="fas fa-download"></i>
-                            <span>正在解密并下载: ${fileName}</span>
-                        </div>
-                    `;
-                    document.body.appendChild(downloadMsg);
-                    
-                    // 3秒后移除消息
-                    setTimeout(() => {
-                        downloadMsg.style.opacity = '0';
-                        setTimeout(() => downloadMsg.remove(), 500);
-                    }, 3000);
+                    downloadFile(fileName);
+                });
+                
+                // 操作按钮事件
+                const actions = card.querySelectorAll('.file-action');
+                actions.forEach(action => {
+                    action.addEventListener('click', function() {
+                        const fileName = this.closest('.file-card').getAttribute('data-filename');
+                        const actionType = this.getAttribute('data-action');
+                        
+                        if(actionType === 'download') {
+                            downloadFile(fileName);
+                        } else if(actionType === 'share') {
+                            showNotification(`已生成 "${fileName}" 的分享链接`, 'info');
+                        } else if(actionType === 'delete') {
+                            showNotification(`文件 "${fileName}" 已安全删除`, 'success');
+                        }
+                    });
                 });
             });
             
             // 上传按钮点击效果
             document.querySelector('.upload-btn').addEventListener('click', function() {
-                // 模拟文件上传
-                const uploadMsg = document.createElement('div');
-                uploadMsg.innerHTML = `
-                    <div style="position: fixed; top: 20px; right: 20px; background: rgba(46, 204, 113, 0.9); color: white; padding: 15px 25px; border-radius: 10px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span>选择文件上传（已启用AES-256加密）</span>
-                    </div>
-                `;
-                document.body.appendChild(uploadMsg);
-                
-                // 3秒后移除消息
-                setTimeout(() => {
-                    uploadMsg.style.opacity = '0';
-                    setTimeout(() => uploadMsg.remove(), 500);
-                }, 3000);
+                showNotification('选择文件上传（已启用AES-256加密）', 'info');
             });
             
             // 导航项点击效果
@@ -1058,6 +1078,96 @@
                     navItems.forEach(i => i.classList.remove('active'));
                     this.classList.add('active');
                 });
+            });
+            
+            // 显示通知消息
+            function showNotification(message, type) {
+                const colors = {
+                    'success': '#2ecc71',
+                    'error': '#e74c3c',
+                    'info': '#3498db'
+                };
+                
+                const icon = {
+                    'success': 'fa-check-circle',
+                    'error': 'fa-exclamation-circle',
+                    'info': 'fa-info-circle'
+                };
+                
+                const notification = document.createElement('div');
+                notification.innerHTML = `
+                    <div style="position: fixed; top: 20px; right: 20px; background: ${colors[type]}; 
+                    color: white; padding: 15px 25px; border-radius: 10px; z-index: 1000; 
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px;
+                    animation: slideIn 0.3s ease-out;">
+                        <i class="fas ${icon[type]}"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+                document.body.appendChild(notification);
+                
+                // 3秒后移除消息
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    setTimeout(() => notification.remove(), 500);
+                }, 3000);
+                
+                // 添加动画
+                const style = document.createElement('style');
+                style.innerHTML = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // 真正的文件下载功能
+            function downloadFile(filename) {
+                showNotification(`正在下载文件: ${filename}`, 'info');
+                
+                // 创建虚拟文件内容（实际应用中应从服务器获取）
+                let content = '';
+                let mimeType = 'application/octet-stream';
+                
+                if(filename.endsWith('.txt')) {
+                    content = `这是${filename}的内容\n创建时间: ${new Date().toLocaleString()}`;
+                    mimeType = 'text/plain';
+                } else if(filename.endsWith('.pdf')) {
+                    content = `%PDF-1.4\n1 0 obj\n<</Type/Catalog/Pages 2 0 R>>\nendobj\n2 0 obj\n<</Type/Pages/Kids [3 0 R]/Count 1>>\nendobj\n3 0 obj\n<</Type/Page/Parent 2 0 R/Resources<</Font<</F1 4 0 R>>>>/Contents 5 0 R>>\nendobj\n4 0 obj\n<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>\nendobj\n5 0 obj\n<</Length 44>>\nstream\nBT\n/F1 12 Tf\n72 720 Td\n(Hello World) Tj\nET\nendstream\nendobj\nxref\n0 6\n0000000000 65535 f \n0000000010 00000 n \n0000000079 00000 n \n0000000173 00000 n \n0000000301 00000 n \n0000000380 00000 n \ntrailer\n<</Size 6/Root 1 0 R>>\nstartxref\n492\n%%EOF`;
+                    mimeType = 'application/pdf';
+                } else if(filename.endsWith('.docx')) {
+                    // 这里简化为生成一个简单的文本文件
+                    content = `这是${filename}的模拟内容\n您可以使用Microsoft Word打开此文件`;
+                    mimeType = 'application/msword';
+                } else {
+                    content = `这是${filename}的内容\n文件大小: 模拟数据\n创建时间: ${new Date().toLocaleString()}`;
+                }
+                
+                // 创建Blob对象
+                const blob = new Blob([content], { type: mimeType });
+                const url = URL.createObjectURL(blob);
+                
+                // 创建下载链接
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                
+                // 清理
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
+            }
+            
+            // 按Enter键登录
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    loginBtn.click();
+                }
             });
         });
     </script>
