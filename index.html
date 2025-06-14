@@ -946,11 +946,7 @@
             <div class="password-error" id="passwordError">
                 <i class="fas fa-exclamation-circle"></i> 密码错误！请重试
             </div>
-            
-            <div class="password-hint" id="passwordHint">
-                <i class="fas fa-lightbulb"></i> 提示：初始密码是 "github123"
-            </div>
-            
+
             <button class="modal-btn" id="loginBtn">
                 <i class="fas fa-unlock-alt"></i> 解锁网盘
             </button>
@@ -960,13 +956,6 @@
                 <span>使用SHA-256哈希验证密码，确保安全性</span>
             </div>
             
-            <div class="debug-info" id="debugInfo">
-                <p><strong>调试信息：</strong></p>
-                <p>输入密码的SHA-256哈希值: <span id="inputHash"></span></p>
-                <p>预期密码的SHA-256哈希值: d3d5c8f48caea6ec3f6e8f2e561f8f2e8a57e7c5a5b8a0c3d5f6a8c3d5e7f4a2</p>
-                <p>注意：在本地测试时，部分浏览器安全限制可能导致问题</p>
-            </div>
-            
             <button class="view-btn" id="toggleDebug" style="margin-top: 15px; width: 100%;">
                 <i class="fas fa-bug"></i> 显示调试信息
             </button>
@@ -974,8 +963,8 @@
     </div>
 
     <script>
-        // 存储密码的SHA-256哈希值（密码为 "github123"）
-        const storedPasswordHash = "d3d5c8f48caea6ec3f6e8f2e561f8f2e8a57e7c5a5b8a极客之家3d5f6a8c3d5e7f4a2";
+        // 存储密码的SHA-256哈希值
+        const storedPasswordHash = "94d8a64bf2a5d28da8f9ac2524f8484bb32692085ea94470c236f6a29f1834be";
         
         // 计算字符串的SHA-256哈希值
         async function sha256(message) {
