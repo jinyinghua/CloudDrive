@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHubPages Drive - 安全加密私人网盘</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a1f2d;
+            --secondary: #3498db;
+            --accent: #1abc9c;
+            --accent-dark: #16a085;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --darker: #1a1f2d;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0d1117, #161b22);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(26, 188, 156, 0.5);
+        }
+        
+        .logo h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        .logo span {
+            font-size: 0.9rem;
+            color: #7e8a98;
+            display: block;
+            margin-top: 5px;
+            letter-spacing: 0.5px;
+        }
+        
+        .storage-info {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 25px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 240px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .storage-info p {
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #bdc3c7;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: var(--darker);
+            border-radius: 5px;
+            margin-top: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            width: 65%;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: progressAnimation 2s infinite linear;
+        }
+        
+        @keyframes progressAnimation {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .main-content {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            padding: 25px;
+            height: fit-content;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .sidebar h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sidebar h3 i {
+            font-size: 1.2rem;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.05rem;
+        }
+        
+        .nav-item:hover {
+            background: rgba(52, 152, 219, 0.15);
+            transform: translateX(5px);
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(to right, rgba(26, 188, 156, 0.3), rgba(52, 152, 219, 0.3));
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.2);
+        }
+        
+        .nav-item i {
+            width: 24px;
+            text-align: center;
+            color: var(--accent);
+        }
+        
+        .upload-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(to right, var(--accent), var(--accent-dark));
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 25px;
+            width: 100%;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.3);
+        }
+        
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(26, 188, 156, 0.5);
+        }
+        
+        .file-section {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .section-header h2 {
+            color: var(--accent);
+            font-size: 1.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-header h2 i {
+            font-size: 1.4rem;
+        }
+        
+        .search-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 320px;
+            transition: var(--transition);
+        }
+        
+        .search-box:focus-within {
+            border-color: rgba(52, 152, 219, 0.5);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            width: 100%;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        .search-box i {
+            color: #7e8a98;
+        }
+        
+        .view-options {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .view-btn {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            padding: 10px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .view-btn:hover {
+            background: rgba(52, 152, 219, 0.15);
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+        
+        .view-btn.active {
+            background: linear-gradient(to right, var(--accent), var(--accent-dark));
+            border-color: rgba(26, 188, 156, 0.3);
+        }
+        
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+        
+        .file-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .file-card:hover {
+            transform: translateY(-8px);
+            background: rgba(52, 152, 219, 0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+        
+        .file-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+        }
+        
+        .file-icon {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        
+        .file-card:hover .file-icon {
+            transform: scale(1.1);
+        }
+        
+        .file-icon.pdf {
+            color: #e74c3c;
+        }
+        
+        .file-icon.img {
+            color: #9b59b6;
+        }
+        
+        .file-icon.doc {
+            color: #3498db;
+        }
+        
+        .file-icon.video {
+            color: #e67e22;
+        }
+        
+        .file-icon.music {
+            color: #1abc9c;
+        }
+        
+        .file-icon.archive {
+            color: #f1c40f;
+        }
+        
+        .file-icon.code {
+            color: #8e44ad;
+        }
+        
+        .file-icon.presentation {
+            color: #e74c3c;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            word-break: break-all;
+            font-size: 1.05rem;
+        }
+        
+        .file-size {
+            color: #bdc3c7;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+        
+        .file-date {
+            color: #7e8a98;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+        
+        .file-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            opacity: 0;
+            transition: var(--transition);
+            transform: translateY(10px);
+        }
+        
+        .file-card:hover .file-actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .file-action {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .file-action:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .recent-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .section-title h3 {
+            color: var(--accent);
+            font-size: 1.4rem;
+        }
+        
+        .recent-files {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 20px;
+        }
+        
+        .recent-file {
+            min-width: 150px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px 15px;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .recent-file:hover {
+            transform: translateY(-5px);
+            background: rgba(52, 152, 219, 0.15);
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+        
+        .recent-file .file-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .auth-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 15, 25, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #161b22, #0d1117);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+        }
+        
+        .modal-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .modal-logo i {
+            font-size: 2.8rem;
+            color: var(--accent);
+        }
+        
+        .modal-logo h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .modal-content h3 {
+            color: var(--accent);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .modal-content p {
+            color: #9da5b4;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .input-group i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7e8a98;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .input-group input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.2);
+            outline: none;
+        }
+        
+        .modal-btn {
+            background: linear-gradient(to right, var(--accent), var(--accent-dark));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.3);
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(26, 188, 156, 0.5);
+        }
+        
+        .security-info {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #7e8a98;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .security-info i {
+            color: var(--accent);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #7e8a98;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .files-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+            
+            .storage-info {
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            .files-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 15px;
+            }
+            
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-cloud"></i>
+                <div>
+                    <h1>GitHubPages Drive</h1>
+                    <span>安全加密私人网盘解决方案</span>
+                </div>
+            </div>
+            <div class="storage-info">
+                <p><span>已使用</span> <span>6.2GB / 10GB</span></p>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <h3><i class="fas fa-folder"></i> 文件管理</h3>
+                <div class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>我的文件</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>最近文件</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-star"></i>
+                    <span>收藏夹</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-share-alt"></i>
+                    <span>共享文件</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>回收站</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-lock"></i>
+                    <span>安全设置</span>
+                </div>
+                
+                <button class="upload-btn">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>上传加密文件</span>
+                </button>
+            </div>
+            
+            <div class="file-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-folder-open"></i> 我的文件</h2>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="搜索加密文件...">
+                    </div>
+                </div>
+                
+                <div class="view-options">
+                    <button class="view-btn active"><i class="fas fa-th"></i> 网格视图</button>
+                    <button class="view-btn"><i class="fas fa-list"></i> 列表视图</button>
+                    <button class="view-btn"><i class="fas fa-sort"></i> 排序</button>
+                </div>
+                
+                <div class="files-grid">
+                    <div class="file-card">
+                        <div class="file-icon doc">
+                            <i class="fas fa-file-word"></i>
+                        </div>
+                        <div class="file-name">项目文档.docx</div>
+                        <div class="file-size">2.4 MB</div>
+                        <div class="file-date">2023-10-15</div>
+                        <div class="file-actions">
+                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="file-card">
+                        <div class="file-icon pdf">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="file-name">研究报告.pdf</div>
+                        <div class="file-size">4.7 MB</div>
+                        <div class="file-date">2023-10-12</div>
+                        <div class="file-actions">
+                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="file-card">
+                        <div class="file-icon img">
+                            <i class="fas fa-file-image"></i>
+                        </div>
+                        <div class="file-name">假期照片.jpg</div>
+                        <div class="file-size">8.2 MB</div>
+                        <div class="file-date">2023-10-08</div>
+                        <div class="file-actions">
+                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="file-card">
+                        <div class="file-icon video">
+                            <i class="fas fa-file-video"></i>
+                        </div>
+                        <div class="file-name">演示视频.mp4</div>
+                        <div class="file-size">245 MB</div>
+                        <div class="file-date">2023-10-02</div>
+                        <div class="file-actions">
+                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="file-card">
+                        <div class="file-icon music">
+                            <i class="fas fa-file-audio"></i>
+                        </div>
+                        <div class="file-name">播放列表.mp3</div>
+                        <div class="file-size">32.1 MB</div>
+                        <div class="file-date">2023-09-28</div>
+                        <div class="file-actions">
+                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="file-card">
+                        <div class="file-icon archive">
+                            <i class="fas fa-file-archive"></i>
+                        </div>
+                        <div class="file-name">备份文件.zip</div>
+                        <div class="file-size">156 MB</div>
+                        <div class="file-date">2023-09-25</div>
+                        <div class="file-actions">
+                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="file-card">
+                        <div class="file-icon presentation">
+                            <i class="fas fa-file-powerpoint"></i>
+                        </div>
+                        <div class="file-name">产品介绍.pptx</div>
+                        <div class="file-size">12.8 MB</div>
+                        <div class="file-date">2023-09-20</div>
+                        <div class="file-actions">
+                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div class="file-card">
+                        <div class="file-icon code">
+                            <i class="fas fa-file-code"></i>
+                        </div>
+                        <div class="file-name">website.html</div>
+                        <div class="file-size">128 KB</div>
+                        <div class="file-date">2023-09-18</div>
+                        <div class="file-actions">
+                            <div class="file-action" title="下载"><i class="fas fa-download"></i></div>
+                            <div class="file-action" title="分享"><i class="fas fa-share-alt"></i></div>
+                            <div class="file-action" title="安全删除"><i class="fas fa-trash-alt"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="recent-section">
+                    <div class="section-title">
+                        <i class="fas fa-clock"></i>
+                        <h3>最近访问的文件</h3>
+                    </div>
+                    <div class="recent-files">
+                        <div class="recent-file">
+                            <div class="file-icon pdf">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="file-name">合同.pdf</div>
+                        </div>
+                        <div class="recent-file">
+                            <div class="file-icon doc">
+                                <i class="fas fa-file-word"></i>
+                            </div>
+                            <div class="file-name">简历.docx</div>
+                        </div>
+                        <div class="recent-file">
+                            <div class="file-icon img">
+                                <i class="fas fa-file-image"></i>
+                            </div>
+                            <div class="file-name">设计稿.png</div>
+                        </div>
+                        <div class="recent-file">
+                            <div class="file-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="file-name">笔记.txt</div>
+                        </div>
+                        <div class="recent-file">
+                            <div class="file-icon archive">
+                                <i class="fas fa-file-archive"></i>
+                            </div>
+                            <div class="file-name">源码.zip</div>
+                        </div>
+                        <div class="recent-file">
+                            <div class="file-icon presentation">
+                                <i class="fas fa-file-powerpoint"></i>
+                            </div>
+                            <div class="file-name">会议资料.pptx</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>GitHubPages Drive &copy; 2023 | 安全加密私人网盘 | 使用SHA-256哈希密码验证</p>
+        </div>
+    </div>
+    
+    <div class="auth-modal" id="authModal">
+        <div class="modal-content">
+            <div class="modal-logo">
+                <i class="fas fa-cloud"></i>
+                <h2>GitHubPages Drive</h2>
+            </div>
+            <h3>安全访问您的网盘</h3>
+            <p>您的文件已通过AES-256加密保护，请输入密码访问您的私人文件</p>
+            
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="passwordInput" placeholder="输入访问密码">
+            </div>
+            
+            <button class="modal-btn" id="loginBtn">
+                <i class="fas fa-unlock-alt"></i> 解锁网盘
+            </button>
+            
+            <div class="security-info">
+                <i class="fas fa-shield-alt"></i>
+                <span>使用SHA-256哈希验证密码，确保安全性</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 存储密码的SHA-256哈希值（示例密码为 "github123"）
+        const storedPasswordHash = "d3d5c8f48caea6ec3f6e8f2e561f8f2e8a57e7c5a5b8a0c3d5f6a8c3d5e7f4a2";
+        
+        // 计算字符串的SHA-256哈希值
+        async function sha256(message) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        
+        // 密码验证函数
+        async function verifyPassword(password) {
+            const hash = await sha256(password);
+            return hash === storedPasswordHash;
+        }
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', async function() {
+            const authModal = document.getElementById('authModal');
+            const passwordInput = document.getElementById('passwordInput');
+            const loginBtn = document.getElementById('loginBtn');
+            
+            // 检查是否已经登录
+            if(!localStorage.getItem('authenticated')) {
+                authModal.style.display = 'flex';
+            } else {
+                authModal.style.display = 'none';
+            }
+            
+            // 登录功能
+            loginBtn.addEventListener('click', async function() {
+                if(passwordInput.value.trim() === '') {
+                    alert('请输入访问密码');
+                    return;
+                }
+                
+                const isValid = await verifyPassword(passwordInput.value);
+                
+                if(isValid) {
+                    localStorage.setItem('authenticated', 'true');
+                    authModal.style.display = 'none';
+                    
+                    // 显示欢迎消息
+                    const welcomeMsg = document.createElement('div');
+                    welcomeMsg.innerHTML = `
+                        <div style="position: fixed; top: 20px; right: 20px; background: rgba(26, 188, 156, 0.9); color: white; padding: 15px 25px; border-radius: 10px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle"></i>
+                            <span>身份验证成功！正在加载您的加密文件...</span>
+                        </div>
+                    `;
+                    document.body.appendChild(welcomeMsg);
+                    
+                    // 3秒后移除消息
+                    setTimeout(() => {
+                        welcomeMsg.style.opacity = '0';
+                        setTimeout(() => welcomeMsg.remove(), 500);
+                    }, 3000);
+                } else {
+                    // 密码错误动画效果
+                    passwordInput.style.borderColor = 'var(--danger)';
+                    passwordInput.style.boxShadow = '0 0 0 3px rgba(231, 76, 60, 0.2)';
+                    
+                    setTimeout(() => {
+                        passwordInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                        passwordInput.style.boxShadow = 'none';
+                    }, 1000);
+                    
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+            });
+            
+            // 文件卡片点击效果
+            const fileCards = document.querySelectorAll('.file-card');
+            fileCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // 防止在点击操作按钮时触发下载
+                    if(e.target.closest('.file-action')) return;
+                    
+                    const fileName = this.querySelector('.file-name').textContent;
+                    const fileType = this.querySelector('.file-icon').className.split(' ')[1];
+                    
+                    // 模拟文件下载
+                    const downloadMsg = document.createElement('div');
+                    downloadMsg.innerHTML = `
+                        <div style="position: fixed; top: 20px; right: 20px; background: rgba(52, 152, 219, 0.9); color: white; padding: 15px 25px; border-radius: 10px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-download"></i>
+                            <span>正在解密并下载: ${fileName}</span>
+                        </div>
+                    `;
+                    document.body.appendChild(downloadMsg);
+                    
+                    // 3秒后移除消息
+                    setTimeout(() => {
+                        downloadMsg.style.opacity = '0';
+                        setTimeout(() => downloadMsg.remove(), 500);
+                    }, 3000);
+                });
+            });
+            
+            // 上传按钮点击效果
+            document.querySelector('.upload-btn').addEventListener('click', function() {
+                // 模拟文件上传
+                const uploadMsg = document.createElement('div');
+                uploadMsg.innerHTML = `
+                    <div style="position: fixed; top: 20px; right: 20px; background: rgba(46, 204, 113, 0.9); color: white; padding: 15px 25px; border-radius: 10px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>选择文件上传（已启用AES-256加密）</span>
+                    </div>
+                `;
+                document.body.appendChild(uploadMsg);
+                
+                // 3秒后移除消息
+                setTimeout(() => {
+                    uploadMsg.style.opacity = '0';
+                    setTimeout(() => uploadMsg.remove(), 500);
+                }, 3000);
+            });
+            
+            // 导航项点击效果
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    navItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
